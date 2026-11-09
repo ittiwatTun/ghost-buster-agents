@@ -1,1 +1,1 @@
-@agents.local.ghost-buster/PREFERENCES.md
+@.agents.local.ghost-buster/PREFERENCES.md

@@ -10,7 +10,7 @@ Session start is the `/session-start` command the owner types, plus the private 
 | `<GhostBuster>\CLAUDE.local.md` | `setup/CLAUDE.local.md` | its import line is added; other lines stay |
 | `<GhostBuster>\PREFERENCES.md` (already gitignored by the project) | `setup/PREFERENCES.pointer.md` | copied |
 | `<GhostBuster>\.mcp\mcpserver.settings.json` | `setup/mcpserver.settings.json` | copied; VS MCP AI Server port 3011 |
-| `<GhostBuster>\.git\info\exclude` | — | `/agents.local.ghost-buster/`, `/CLAUDE.local.md`, `/.mcp/` added |
+| `<GhostBuster>\.git\info\exclude` | — | `/.agents.local.ghost-buster/`, `/CLAUDE.local.md`, `/.mcp/` added |
 | `<GhostBuster>\.claude\settings.local.json` `hooks.SessionStart` | `setup/session-start-hooks.json` | merged, **only while git does not track the file** |
 
 To change a piece, edit its tracked source, commit, and run the script again. Never hand-edit an installed copy.
@@ -26,8 +26,8 @@ GhostBuster tracks `.claude/settings.local.json` (it holds the team's permission
 ## Install
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File <GhostBuster>\agents.local.ghost-buster\scripts\setup-machine.ps1 -DryRun
-powershell -NoProfile -ExecutionPolicy Bypass -File <GhostBuster>\agents.local.ghost-buster\scripts\setup-machine.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File <GhostBuster>\.agents.local.ghost-buster\scripts\setup-machine.ps1 -DryRun
+powershell -NoProfile -ExecutionPolicy Bypass -File <GhostBuster>\.agents.local.ghost-buster\scripts\setup-machine.ps1
 ```
 
 Each line is `ok`, `written` or `skipped` and names its target. `VarisDev1`, 2026-11-09: everything written, the hook skipped.
@@ -35,8 +35,8 @@ Each line is `ok`, `written` or `skipped` and names its target. `VarisDev1`, 202
 ## Verify
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File <GhostBuster>\agents.local.ghost-buster\scripts\open-unity.ps1 -DryRun
-powershell -NoProfile -ExecutionPolicy Bypass -File <GhostBuster>\agents.local.ghost-buster\scripts\open-vs.ps1 -DryRun
+powershell -NoProfile -ExecutionPolicy Bypass -File <GhostBuster>\.agents.local.ghost-buster\scripts\open-unity.ps1 -DryRun
+powershell -NoProfile -ExecutionPolicy Bypass -File <GhostBuster>\.agents.local.ghost-buster\scripts\open-vs.ps1 -DryRun
 ```
 
 `VarisDev1`, 2026-11-09: `would start E:\UnityHub\6000.3.2f1\Editor\Unity.exe -projectPath "E:\Itt\Repository\GhostBuster" -automated -force-gfx-mt (elevated=True)` and `would start Visual Studio for GhostBuster.slnx (elevated=True)`. Real runs log to `GhostBuster/Logs/open-unity.log` and `open-vs.log`.

@@ -29,14 +29,14 @@ Claude Code spawns MCP servers about 2 s after start. An http entry gets one 5 s
 
 ## Setup on another machine
 
-1. Clone this repo to `<GhostBuster>\agents.local.ghost-buster`.
+1. Clone this repo to `<GhostBuster>\.agents.local.ghost-buster`.
 2. Prerequisites: Windows PowerShell 5.1, `unity` CLI on `PATH`, the Unity Editor in `ProjectSettings/ProjectVersion.txt`, Visual Studio 2022 with MCP AI Server, .NET SDK 8+, `dotnet tool install -g SharpLensMcp`.
-3. `powershell -NoProfile -ExecutionPolicy Bypass -File <GhostBuster>\agents.local.ghost-buster\scripts\setup-machine.ps1` (`handoff/session-start-setup.md`).
+3. `powershell -NoProfile -ExecutionPolicy Bypass -File <GhostBuster>\.agents.local.ghost-buster\scripts\setup-machine.ps1` (`handoff/session-start-setup.md`).
 4. Register the servers from the GhostBuster root (local scope is keyed on that directory; paths absolute):
    ```powershell
    Set-Location <GhostBuster>
    $r = (Resolve-Path .).Path -replace '\\', '/'
-   $w = "$r/agents.local.ghost-buster/MCP/scripts"
+   $w = "$r/.agents.local.ghost-buster/MCP/scripts"
    claude mcp add -s local gb-unity-editor-mcp -- powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "$w/wait-unity-mcp.ps1" -ProjectPath .
    claude mcp add -s local gb-vs-mcp           -- powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "$w/wait-vs-mcp.ps1" -Url http://localhost:3011/sdk/
    claude mcp add -s local csharp-roslyn-gb -e "DOTNET_SOLUTION_PATH=$r/GhostBuster.slnx" -e SHARPLENS_TIMEOUT_SECONDS=120 -- sharplens
@@ -77,7 +77,7 @@ Never wait blind, and never poll `test_status`: it stays `running` forever when 
 **Unity tests:** `editor_focus`, then start the watcher through Monitor, then `test_run`. Check `scene_list_open` for `isDirty` first: an Editor launched with `-automated` answers the test runner's save prompt with Cancel unseen, so a dirty scene drops the run before it starts (exit `3`). A dirty scene is the owner's; ask before saving.
 
 ```bash
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$(cygpath -w agents.local.ghost-buster/MCP/scripts/wait-unity-tests.ps1)" -ProjectPath .
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$(cygpath -w .agents.local.ghost-buster/MCP/scripts/wait-unity-tests.ps1)" -ProjectPath .
 ```
 
 Exit codes: `0` passed, `1` a test failed, `2` aborted, `3` accepted but never started, `4` no request or nothing matched, `5` stalled, `6` cancelled, `7` past the budget. `-Attach` joins a run in flight. A crashed run strands `Assets/InitTestScene<guid>.unity` (`STRANDED` line): reopen the working scene, then delete the stranded one.
@@ -85,5 +85,5 @@ Exit codes: `0` passed, `1` a test failed, `2` aborted, `3` accepted but never s
 **Any other long command** (a build, `dotnet build`): `scripts/run-timed.ps1` through Monitor. It kills the process tree past the budget (exit `124`), otherwise exits with the command's code, and records the wall time.
 
 ```bash
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$(cygpath -w agents.local.ghost-buster/MCP/scripts/run-timed.ps1)" -Key gb:editor-build -TailLines 3 -WorkingDirectory . -Command 'dotnet build Assembly-CSharp-Editor.csproj -v q -nologo'
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$(cygpath -w .agents.local.ghost-buster/MCP/scripts/run-timed.ps1)" -Key gb:editor-build -TailLines 3 -WorkingDirectory . -Command 'dotnet build Assembly-CSharp-Editor.csproj -v q -nologo'
 ```

@@ -5,12 +5,12 @@
       "hooks": [
         {
           "type": "command",
-          "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"$CLAUDE_PROJECT_DIR/agents.local.ghost-buster/scripts/open-unity.ps1\"",
+          "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"$CLAUDE_PROJECT_DIR/.agents.local.ghost-buster/scripts/open-unity.ps1\"",
           "timeout": 30
         },
         {
           "type": "command",
-          "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"$CLAUDE_PROJECT_DIR/agents.local.ghost-buster/scripts/open-vs.ps1\"",
+          "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"$CLAUDE_PROJECT_DIR/.agents.local.ghost-buster/scripts/open-vs.ps1\"",
           "timeout": 30
         }
       ]

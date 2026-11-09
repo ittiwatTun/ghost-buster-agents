@@ -1,6 +1,6 @@
 <#
 Stdio MCP server for a Visual Studio MCP endpoint that waits for Visual Studio before it serves.
-Registered in local scope as `gb-vs-mcp` (see agents.local.ghost-buster/MCP/README.md):
+Registered in local scope as `gb-vs-mcp` (see .agents.local.ghost-buster/MCP/README.md):
 
   powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File wait-vs-mcp.ps1 -Url http://localhost:<port>/sdk/
 
@@ -15,14 +15,14 @@ serves again.
 The wait ends at $env:MCP_TIMEOUT milliseconds, the client's own startup bound, or when the client
 exits. Stdout carries MCP only; everything else goes to Logs/wait-vs-mcp.log and stderr.
 
-This lives in agents.local.ghost-buster/ - user/device scope, private repo, not part of the project.
+This lives in .agents.local.ghost-buster/ - user/device scope, private repo, not part of the project.
 #>
 param([Parameter(Mandatory)] [string]$Url)
 
 $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.Net.Http
 
-# MCP\scripts -> MCP -> agents.local.ghost-buster -> the GhostBuster root, which is the Unity project.
+# MCP\scripts -> MCP -> .agents.local.ghost-buster -> the GhostBuster root, which is the Unity project.
 $UnityDir = (Resolve-Path (Join-Path $PSScriptRoot '..\..\..')).Path
 $Log = Join-Path $UnityDir 'Logs\wait-vs-mcp.log'
 $LogMaxBytes = 200000

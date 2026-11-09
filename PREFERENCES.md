@@ -1,6 +1,6 @@
 # User Preferences
 
-User/device scope for GhostBuster. Lives at `GhostBuster/agents.local.ghost-buster/`, its own private git repo (`ittiwatTun/ghost-buster-agents`), excluded from the project repo by `GhostBuster/.git/info/exclude`. Loaded by `GhostBuster/CLAUDE.local.md`, and pointed at by the gitignored root `PREFERENCES.md` that `CLAUDE.md` Read Order step 0 reads. Set up 2026-11-09 from the king-of-ashes harness (`king-of-ashes/.agents.local`).
+User/device scope for GhostBuster. Lives at `GhostBuster/.agents.local.ghost-buster/`, its own private git repo (`ittiwatTun/ghost-buster-agents`), excluded from the project repo by `GhostBuster/.git/info/exclude`. Loaded by `GhostBuster/CLAUDE.local.md`, and pointed at by the gitignored root `PREFERENCES.md` that `CLAUDE.md` Read Order step 0 reads. Set up 2026-11-09 from the king-of-ashes harness (`king-of-ashes/.agents.local`).
 
 All paths in this file are relative to this folder unless they start with `GhostBuster/`.
 

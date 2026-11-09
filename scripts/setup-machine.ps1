@@ -1,6 +1,6 @@
 <#
 Installs the untracked, per-machine pieces of session start from their tracked sources in
-agents.local.ghost-buster/setup/. Safe to run again; a piece already in place is left alone.
+.agents.local.ghost-buster/setup/. Safe to run again; a piece already in place is left alone.
 
   powershell -NoProfile -ExecutionPolicy Bypass -File setup-machine.ps1 [-DryRun]
 
@@ -31,7 +31,7 @@ if ($PSVersionTable.PSVersion.Major -lt 6 -and (Get-Command pwsh -ErrorAction Si
     exit $LASTEXITCODE
 }
 
-# scripts -> agents.local.ghost-buster -> the GhostBuster root.
+# scripts -> .agents.local.ghost-buster -> the GhostBuster root.
 $AgentsDir = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $AgentsName = Split-Path $AgentsDir -Leaf
 $RootDir = (Resolve-Path (Join-Path $AgentsDir '..')).Path

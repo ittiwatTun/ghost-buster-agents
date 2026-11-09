@@ -12,7 +12,7 @@ What belongs here and nowhere else: working-tree state, uncommitted lists, local
 
 ### Harness copied from king-of-ashes; Switch devkit research started
 
-Session-start: copy the tool harness from `king-of-ashes/.agents.local` into `GhostBuster/agents.local.ghost-buster`, init repo `ittiwatTun/ghost-buster-agents`.
+Session-start: copy the tool harness from `king-of-ashes/.agents.local` into `GhostBuster/.agents.local.ghost-buster`, init repo `ittiwatTun/ghost-buster-agents`.
 
 **Done:**
 - Copied and adapted: `PREFERENCES.md` (generic rules only; scope note against `CLAUDE.md`), `MCP/README.md` (one file for KOA's README, VS_UNITY and ROSLYN), `MCP/scripts/*` (wrappers resolve the GhostBuster root), `scripts/open-unity.ps1`, `open-vs.ps1`, `StandardUser.ps1`, `setup-machine.ps1`, `setup/*`, `handoff/session-start-setup.md`, three generic `Memory/` notes.

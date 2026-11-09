@@ -1,6 +1,6 @@
 <#
 Stdio MCP server for a Unity Editor that waits for the Editor before it serves. Registered in local
-scope as `gb-unity-editor-mcp` (see agents.local.ghost-buster/MCP/README.md):
+scope as `gb-unity-editor-mcp` (see .agents.local.ghost-buster/MCP/README.md):
 
   powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File wait-unity-mcp.ps1 -ProjectPath <path>
 
@@ -12,13 +12,13 @@ never tells the client when tools appear. This script leaves the client's initia
 client's own startup bound, or when the client exits. Stdout carries MCP only; everything else goes to
 Logs/wait-unity-mcp.log and stderr.
 
-This lives in agents.local.ghost-buster/ - user/device scope, private repo, not part of the project.
+This lives in .agents.local.ghost-buster/ - user/device scope, private repo, not part of the project.
 #>
 param([Parameter(Mandatory)] [string]$ProjectPath)
 
 $ErrorActionPreference = 'Stop'
 
-# MCP\scripts -> MCP -> agents.local.ghost-buster -> the GhostBuster root, which is the Unity project.
+# MCP\scripts -> MCP -> .agents.local.ghost-buster -> the GhostBuster root, which is the Unity project.
 $UnityDir = (Resolve-Path (Join-Path $PSScriptRoot '..\..\..')).Path
 $Project = [IO.Path]::GetFullPath((Join-Path $UnityDir $ProjectPath)).TrimEnd('\')
 $Log = Join-Path $UnityDir 'Logs\wait-unity-mcp.log'

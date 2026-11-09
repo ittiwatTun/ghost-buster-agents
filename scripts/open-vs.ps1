@@ -20,14 +20,14 @@ here connects once it has loaded.
 
 -DryRun decides and reports the same way but launches nothing. Diagnosis: MCP/VS_UNITY.md.
 
-This lives in agents.local.ghost-buster/ - user/device scope, private repo, not part of the project.
+This lives in .agents.local.ghost-buster/ - user/device scope, private repo, not part of the project.
 #>
 param([switch]$DryRun)
 
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'StandardUser.ps1')
 
-# scripts -> agents.local.ghost-buster -> the GhostBuster root, which is the Unity project.
+# scripts -> .agents.local.ghost-buster -> the GhostBuster root, which is the Unity project.
 $UnityDir = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 $LogsDir = Join-Path $UnityDir 'Logs'
 $Log = Join-Path $LogsDir 'open-vs.log'

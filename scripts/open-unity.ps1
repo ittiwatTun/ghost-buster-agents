@@ -17,7 +17,7 @@ refuses to support that.
 
 -DryRun decides and reports the same way but launches nothing.
 
-This lives in agents.local.ghost-buster/ - user/device scope, private repo, not part of the project. The
+This lives in .agents.local.ghost-buster/ - user/device scope, private repo, not part of the project. The
 project's own docs do not describe it; PREFERENCES.md does.
 #>
 param([switch]$DryRun)
@@ -25,7 +25,7 @@ param([switch]$DryRun)
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'StandardUser.ps1')
 
-# scripts -> agents.local.ghost-buster -> the GhostBuster root, which is the Unity project.
+# scripts -> .agents.local.ghost-buster -> the GhostBuster root, which is the Unity project.
 $UnityDir = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 $ProjectName = Split-Path $UnityDir -Leaf
 $EditorArgs = '-automated -force-gfx-mt'
