@@ -8,6 +8,16 @@ What belongs here and nowhere else: working-tree state, uncommitted lists, local
 
 ---
 
+## 2026-11-09 (session 2)
+
+### Switch 1 EDEV onboarding; editor upgrade to 6000.3.28f1 started
+
+- Owner has a **Switch 1 EDEV**, used only for deploy tests. SDEV vs EDEV explained in chat (EDEV = retail-like test unit, retail RAM, limited debugging).
+- NDI is deprecated; owner downloaded **NNPM** (Nintendo Package Manager). NNPM recommends Unity **6000.3.28f1 LTS** for the Switch module, so the project moves from 6000.3.2f1 (same minor line).
+- GhostBuster: fast-forwarded `develop` to `d0859e6bd` (4 commits, no editor/package change) and cut **`chore/unity-6000.3.28f1`** in the main tree. Nothing committed on it yet.
+- Owner is installing 6000.3.28f1 via Hub. The first open must go through Hub with 6000.3.28f1: `scripts/open-unity.ps1` reads `ProjectVersion.txt` and would still launch 6000.3.2f1.
+- Next: owner opens the project once in 6000.3.28f1, then review the `ProjectVersion.txt` / `Packages/*` diff, check that the console is clean and the Steam Windows build works, commit `[Mod] Upgrade Unity 6000.3.2f1 to 6000.3.28f1`, and tell the team before merging. After that: Switch module plus the NintendoSDK version it names, in NNPM.
+
 ## 2026-11-09 (session 1)
 
 ### Harness copied from king-of-ashes; Switch and Linux build audits; video codec finding
