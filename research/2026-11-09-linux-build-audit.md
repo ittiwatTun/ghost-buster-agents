@@ -50,6 +50,13 @@ Unlike Switch, Linux has no NDA layer: Unity's Linux player and Steamworks' Linu
   - Editor preview uses the host OS decoders. In the format table, `.mp4` is most likely not ticked for Linux; the fetched table was garbled, so confirm in a browser.
   - The vendor decoder list names Windows, UWP, Android and iOS, not Linux. Linux Player H.264 support is not stated either way.
 - [inf] Linux players are commonly reported to play only VP8 and to fail on `.mp4`. Unverified here: one Linux test build with one clip decides it.
+- **Not only Linux (owner, 2026-11-09: some Windows machines without the codec also fail).** H.264 in Unity is decoded by the OS, through Media Foundation on Windows:
+  - Windows N/KN editions ship without Media Foundation (`MFPlat.DLL`). They need the Microsoft Media Feature Pack, or H.264 playback fails ([AVPro Windows notes](https://renderheads.com/content/docs/AVProVideo/articles/platform-windows.html)).
+  - Unity's issue tracker logs a non-specific `VideoPlayer` failure when Media Foundation is absent ([Win 8 N/KN issue](https://issuetracker.unity3d.com/issues/win-8-kn-slash-n-videoplayer-inadequate-error-reporting-on-errorreceived-callback-when-media-player-is-not-present)).
+  - Steam Deck under Proton goes through Wine's Media Foundation [inf, weak spot].
+  - The repo already has two open Media Foundation-related crashes: I-032 (D3D12 faults on the MF hardware-decoded texture, worked around by pinning D3D11) and I-029 (Editor crashes while MF opens the guide clips).
+  - [inf] VP8 is decoded by Unity's own software decoder on every platform, so a VP8 transcode removes the OS codec dependency everywhere, and likely the MF path behind I-032 and I-029 as well. Cost: CPU decode, lower quality per bitrate. These clips are short and small (14 MB total).
+  - No video handler subscribes to `VideoPlayer.errorReceived` [obs]. The prepare loops time out and carry on: `AreaVideoSceneHandler.cs:192-197` logs a generic "prepare did not finish" warning, `IntroSceneHandler.cs:345`, and `GuidePanelUI.cs:506`. None logs the decoder's reason, so a codec failure on a player's machine reads as a timeout in a bug report.
 - Fix:
   - Turn on transcoding on every referenced clip, with codec VP8, or Auto (picks per target platform). `intro.mp4` already transcodes, but to H.264, which does not help Linux. Transcode settings are per clip; Windows and Linux share the "Standalone" settings, so Windows moves to VP8 too, which also works.
   - Or re-export the clips as `.webm` VP8.
