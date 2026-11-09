@@ -10,21 +10,55 @@ What belongs here and nowhere else: working-tree state, uncommitted lists, local
 
 ## 2026-11-09 (session 1)
 
-### Harness copied from king-of-ashes; Switch devkit research started
+### Harness copied from king-of-ashes; Switch and Linux build audits; video codec finding
 
-Session-start: copy the tool harness from `king-of-ashes/.agents.local` into `GhostBuster/.agents.local.ghost-buster`, init repo `ittiwatTun/ghost-buster-agents`.
+Session-start: copy the tool harness from `king-of-ashes/.agents.local` into a GhostBuster agents folder and init repo `ittiwatTun/ghost-buster-agents`. GhostBuster at `develop` `271940f2b` throughout; no project file changed this session.
 
-**Done:**
-- Copied and adapted: `PREFERENCES.md` (generic rules only; scope note against `CLAUDE.md`), `MCP/README.md` (one file for KOA's README, VS_UNITY and ROSLYN), `MCP/scripts/*` (wrappers resolve the GhostBuster root), `scripts/open-unity.ps1`, `open-vs.ps1`, `StandardUser.ps1`, `setup-machine.ps1`, `setup/*`, `handoff/session-start-setup.md`, three generic `Memory/` notes.
-- Not copied: Gantt, Sprint, Monthly, TownHall, Release, codex, pr records, sdd, openspec, Drive scripts, KOA ledgers' content.
-- `setup-machine.ps1` run: `GhostBuster/CLAUDE.local.md`, root `PREFERENCES.md` pointer, `.mcp/mcpserver.settings.json` (port 3011), `.git/info/exclude` written. SessionStart hook skipped: GhostBuster tracks `.claude/settings.local.json` (options in `handoff/session-start-setup.md`). GhostBuster `git status` clean after.
-- MCP registered local scope under `E:/Itt/Repository/GhostBuster`: `gb-unity-editor-mcp`, `gb-vs-mcp` (3011), `csharp-roslyn-gb` (`GhostBuster.slnx`; `.csproj` files not generated yet).
+**Harness (done):**
+- Folder is `GhostBuster/.agents.local.ghost-buster`, renamed from `agents.local.ghost-buster` at the owner's ask (`f22ccbf`), kept out of git by `GhostBuster/.git/info/exclude` (`/.agents.local.ghost-buster/`, `/CLAUDE.local.md`, `/.mcp/`), not `.gitignore`.
+- Copied and adapted:
+  - `PREFERENCES.md`, generic rules only, with a scope note: it overrides `CLAUDE.md` only on what it names.
+  - `MCP/README.md`, one file for KOA's README, VS_UNITY and ROSLYN.
+  - `MCP/scripts/*`, `scripts/open-unity.ps1`, `open-vs.ps1`, `StandardUser.ps1`, `setup-machine.ps1`, `setup/*`, `handoff/session-start-setup.md`.
+  - three generic `Memory/` notes.
+- Not copied: Gantt, Sprint, Monthly, TownHall, Release, codex, pr records, sdd, openspec, Drive scripts.
+- `setup-machine.ps1` installed: `GhostBuster/CLAUDE.local.md` (`@.agents.local.ghost-buster/PREFERENCES.md`), the root `PREFERENCES.md` pointer, `.mcp/mcpserver.settings.json` (VS MCP port 3011), the exclude lines.
+  - SessionStart hook skipped: GhostBuster tracks `.claude/settings.local.json`. Three options are in `handoff/session-start-setup.md`; none chosen.
+- MCP, local scope under `E:/Itt/Repository/GhostBuster`, absolute paths to `.agents.local.ghost-buster/MCP/scripts`:
+  - `gb-unity-editor-mcp`
+  - `gb-vs-mcp` (3011)
+  - `csharp-roslyn-gb` (`GhostBuster.slnx`)
+  - None checked in a live session yet. The `.csproj` files are not generated, so SharpLens loads nothing until Unity regenerates them.
+- Launcher dry runs: `E:\UnityHub\6000.3.2f1\Editor\Unity.exe -projectPath "E:\Itt\Repository\GhostBuster" -automated -force-gfx-mt`; VS for `GhostBuster.slnx`.
 
-- First task from the owner: research and audit the preparation to add the Nintendo SDK and build to the devkit. Done read-only: `research/2026-11-09-switch-devkit-audit.md`. Key claims re-checked by hand (defines, quality default, save size, modules, Mono backend, unreferenced NuGet DLLs, `Application.Quit`).
+**Switch devkit audit** (owner's first task), read-only: `research/2026-11-09-switch-devkit-audit.md`.
+- No Switch module or Nintendo SDK on the machine. Mono-only, never built IL2CPP.
+- No `DISABLESTEAMWORKS` for Switch, so the Steam scripts will not compile.
+- 41 unreferenced NuGet DLLs are enabled for every platform (`002e8c74a`).
+- PlayerPrefs saves, with save size 0.
+- Switch would use the PC render settings by default; heavy lightmaps.
+- Owner asked where the knowledge comes from: repo/machine observation, public Unity facts, training knowledge. No NDA docs. [inf] lines need checking once there is portal access.
 
-- Linux build audit, read-only: `research/2026-11-09-linux-build-audit.md`. Blockers: no Linux Build Support module, all 14 shipping video clips are H.264 (Unity recommends VP8 on Linux; H.264 playback on a Linux Player not documented, test it).
+**Linux build audit**, read-only: `research/2026-11-09-linux-build-audit.md`.
+- Blocker: no Linux Build Support module in any editor.
+- Risks: the X-ray shader `LitXRay` excludes `glcore`; glyph detection by `XInput` layout name; one Windows-only Steam depot.
+- Steam Deck can run the Windows build under Proton.
+
+**Video codec finding** (grew out of the Linux audit, extended by the owner):
+- All 14 shipping clips in `Assets/Recordings` are H.264 (`avc1`).
+- Unity's Windows player has no H.264 decoder of its own. Verified in `UnityPlayer.dll` 6000.3.2f1: it calls Media Foundation, embeds libvpx (`WebM Project VP8 Decoder v1.3.0`), has no openh264 or ffmpeg, and carries the "Media Foundation is not installed" error string.
+- So H.264 fails on Windows N/KN without the Media Feature Pack, probably on Linux, and possibly under Proton. Related to the open I-032 and I-029 Media Foundation crashes.
+- No handler reads `VideoPlayer.errorReceived`, so a failure reads as a prepare timeout.
+- First Linux report overstated "Linux cannot play H.264" as documented. Corrected to a risk with Unity 6.3 doc citations (`a4eacf1`).
 
 **Open:**
+- Proposed project change, waiting for the owner's go-ahead:
+  - transcode the 14 clips to VP8
+  - log `errorReceived` in `AreaVideoSceneHandler`, `IntroSceneHandler`, `GuidePanelUI`, `StageDetailUI`
+  - add a `KNOWN_ISSUES` entry
+  - test on Windows N, Linux and Deck, plus I-032 under D3D12
+  - Would run in a worktree per `CLAUDE.md`.
+- Switch audit: 9 open questions at the end of its report.
 - Linux audit: 4 open questions (native vs Proton-only, test device, backend, video format).
-- Switch audit: 9 open questions for the owner at the end of the report; no project change made.
-- Repo not pushed; remote `origin` set.
+- SessionStart hook: pick an option in `handoff/session-start-setup.md`.
+- This repo is not pushed. `origin` is `ittiwatTun/ghost-buster-agents`, rewritten to ssh by a global `insteadOf`.
