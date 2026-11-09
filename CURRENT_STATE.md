@@ -20,6 +20,8 @@ Session-start: copy the tool harness from `king-of-ashes/.agents.local` into `Gh
 - `setup-machine.ps1` run: `GhostBuster/CLAUDE.local.md`, root `PREFERENCES.md` pointer, `.mcp/mcpserver.settings.json` (port 3011), `.git/info/exclude` written. SessionStart hook skipped: GhostBuster tracks `.claude/settings.local.json` (options in `handoff/session-start-setup.md`). GhostBuster `git status` clean after.
 - MCP registered local scope under `E:/Itt/Repository/GhostBuster`: `gb-unity-editor-mcp`, `gb-vs-mcp` (3011), `csharp-roslyn-gb` (`GhostBuster.slnx`; `.csproj` files not generated yet).
 
+- First task from the owner: research and audit the preparation to add the Nintendo SDK and build to the devkit. Done read-only: `research/2026-11-09-switch-devkit-audit.md`. Key claims re-checked by hand (defines, quality default, save size, modules, Mono backend, unreferenced NuGet DLLs, `Application.Quit`).
+
 **Open:**
-- First task from the owner: research and audit the preparation to add the Nintendo SDK and build to the devkit. Output to `research/`.
+- Switch audit: 9 open questions for the owner at the end of the report; no project change made.
 - Repo not pushed; remote `origin` set.
