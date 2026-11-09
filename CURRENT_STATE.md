@@ -14,10 +14,10 @@ What belongs here and nowhere else: working-tree state, uncommitted lists, local
 
 - Owner has a **Switch 1 EDEV**, used only for deploy tests. SDEV vs EDEV explained in chat (EDEV = retail-like test unit, retail RAM, limited debugging).
 - NDI is deprecated; owner downloaded **NNPM** (Nintendo Package Manager). NNPM recommends Unity **6000.3.28f1 LTS** for the Switch module, so the project moves from 6000.3.2f1 (same minor line).
-- GhostBuster: fast-forwarded `develop` to `d0859e6bd` (4 commits, no editor/package change) and cut **`chore/unity-6000.3.28f1`** in the main tree. Nothing committed on it yet.
+- GhostBuster: fast-forwarded `develop` to `d0859e6bd` (4 commits, no editor/package change) and cut **`nintendo-sdk` (renamed from `chore/unity-6000.3.28f1`)** in the main tree. Nothing committed on it yet.
 - Owner is installing 6000.3.28f1 via Hub. The first open must go through Hub with 6000.3.28f1: `scripts/open-unity.ps1` reads `ProjectVersion.txt` and would still launch 6000.3.2f1.
 - Owner opened the project in 6000.3.28f1 through Hub. Editor.log: 0 `error CS`; the API Updater timed out on DOTween and Coplay DLLs during the first import (0/4 updated, benign inside a patch line).
-- Commits on `chore/unity-6000.3.28f1` (local, not pushed, not merged):
+- Commits on `nintendo-sdk` (local, not pushed, not merged):
   - `d8132020f` `[Mod] Upgrade Unity 6000.3.2f1 to 6000.3.28f1 LTS`: ProjectVersion, manifest/lock (Input System 1.18.0 to 1.20.1, ProBuilder 6.1.4, AI Navigation 2.0.16 and others; URP stays 17.3.0), URP global settings v10, ProBuilder settings.
   - `d59631523` `[Mod] Reimport texture metas under Unity 6000.3.28f1`: 3,874 png/jpg metas (importer v13, WindowsStoreApps blocks, AssetOrigin dropped, 15 sentinel filterMode/mipBias written out). Owner chose a separate commit.
 - `Packages/Coplay/.gitignore` and `ProjectSettings/EditorBuildSettings.asset` show `M` with identical content (stat-only); left alone.
