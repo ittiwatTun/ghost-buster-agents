@@ -21,6 +21,8 @@ What belongs here and nowhere else: working-tree state, uncommitted lists, local
   - `d8132020f` `[Mod] Upgrade Unity 6000.3.2f1 to 6000.3.28f1 LTS`: ProjectVersion, manifest/lock (Input System 1.18.0 to 1.20.1, ProBuilder 6.1.4, AI Navigation 2.0.16 and others; URP stays 17.3.0), URP global settings v10, ProBuilder settings.
   - `d59631523` `[Mod] Reimport texture metas under Unity 6000.3.28f1`: 3,874 png/jpg metas (importer v13, WindowsStoreApps blocks, AssetOrigin dropped, 15 sentinel filterMode/mipBias written out). Owner chose a separate commit.
 - `Packages/Coplay/.gitignore` and `ProjectSettings/EditorBuildSettings.asset` show `M` with identical content (stat-only); left alone.
+- NNPM Switch package install in progress. EDEV not connected yet: no USB-C data cable at hand (skipped for now). Ignore the "relay box" (HAT-004) claim from lucklessheaven.com; it is an unverified fan site. The portal's EDEV setup page is the source for cabling.
+- MSVC C++ tools are now present (VS Community 2022 17.14), so a Windows IL2CPP test build is possible.
 - Open: owner checks Play mode, two gamepads in menus (Input System minor bump, D55), and the Steam Windows build; tells the team before merging into `develop`. Then: Switch module plus its NintendoSDK in NNPM. Tracked docs still name 6000.3.2f1 (`.ai/HANDOFF_AUDIO_SYSTEM.md:18`, I-077); I-077 may be fixed by this upgrade, unverified.
 
 ## 2026-11-09 (session 1)
