@@ -22,7 +22,7 @@ Session-start: copy the tool harness from `king-of-ashes/.agents.local` into `Gh
 
 - First task from the owner: research and audit the preparation to add the Nintendo SDK and build to the devkit. Done read-only: `research/2026-11-09-switch-devkit-audit.md`. Key claims re-checked by hand (defines, quality default, save size, modules, Mono backend, unreferenced NuGet DLLs, `Application.Quit`).
 
-- Linux build audit, read-only: `research/2026-11-09-linux-build-audit.md`. Blockers: no Linux Build Support module, all 14 shipping video clips are H.264 (Linux plays VP8 only).
+- Linux build audit, read-only: `research/2026-11-09-linux-build-audit.md`. Blockers: no Linux Build Support module, all 14 shipping video clips are H.264 (Unity recommends VP8 on Linux; H.264 playback on a Linux Player not documented, test it).
 
 **Open:**
 - Linux audit: 4 open questions (native vs Proton-only, test device, backend, video format).

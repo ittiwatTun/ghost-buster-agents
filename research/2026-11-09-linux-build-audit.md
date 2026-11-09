@@ -9,7 +9,7 @@ Unlike Switch, Linux has no NDA layer: Unity's Linux player and Steamworks' Linu
 ## Bottom line
 
 - One install is missing: **Linux Build Support** is in none of the 4 editors.
-- One content blocker: **every in-game video is H.264**. Unity's Linux player does not decode H.264; it plays VP8 [doc]. The intro (AreaVideoScene), the stage previews and the guide clips would show nothing.
+- One content risk: **every in-game video is H.264**. Unity recommends VP8/webm for Linux [doc]; the docs do not say outright that a Linux Player cannot play H.264, but they list no Linux H.264 decoder, and Linux players are commonly reported to fail on `.mp4` [inf]. The intro (AreaVideoScene), the stage previews and the guide clips may show nothing. Settle it with one test build on Linux; the fix (transcode to VP8) is cheap either way.
 - Everything else is small. Steam, Mirror and FizzySteamworks all support Linux, and project code has almost no Windows-only paths.
 - A native Linux build is optional for Steam Deck: the current Windows build can run there under Proton. Pick the goal first (see Open questions).
 
@@ -32,9 +32,9 @@ Unlike Switch, Linux has no NDA layer: Unity's Linux player and Steamworks' Linu
   - `SettingsData.cs:22` offers `ExclusiveFullScreen`, which exists only on Windows; on Linux it becomes borderless fullscreen [doc]. Hide that option on Linux, or accept it.
   - `ImageFilePicker.cs:41` reads the same mode, but that code is Windows-guarded.
 
-## 3. Content blocker: video
+## 3. Content risk: video
 
-- ❌ **All shipping video clips are H.264 [obs].**
+- ⚠ **All shipping video clips are H.264 [obs].**
   - `Assets/Recordings/*.mp4`: an `ftyp mp42` header and an `avc1` atom found in `Movie_004.mp4` and `intro.mp4`.
   - Unity Recorder output, 31 files, 14 MB.
 - Referenced by shipping data [obs]:
@@ -45,9 +45,13 @@ Unlike Switch, Linux has no NDA layer: Unity's Linux player and Steamworks' Linu
 - Import settings [obs]:
   - `intro.mp4.meta` transcodes for "Others" to `codec: 1` (H.264).
   - The rest have `targetSettings: {}`, so the source H.264 ships as is.
-- [doc] Unity's video compatibility table: Linux plays VP8 (`.webm` or transcoded); H.264 and H.265 are not supported on Linux.
+- What the Unity 6.3 docs say, checked 2026-11-09 ([file compatibility](https://docs.unity.com/en-us/engine/6000.3/manual/video/sources/file-compatibility), [target platforms](https://docs.unity.com/en-us/engine/6000.3/manual/video/sources/compatibility-target-platforms)):
+  - "the optimal encoding for Linux is a .webm container with VP8 for video and Vorbis for audio."
+  - Editor preview uses the host OS decoders. In the format table, `.mp4` is most likely not ticked for Linux; the fetched table was garbled, so confirm in a browser.
+  - The vendor decoder list names Windows, UWP, Android and iOS, not Linux. Linux Player H.264 support is not stated either way.
+- [inf] Linux players are commonly reported to play only VP8 and to fail on `.mp4`. Unverified here: one Linux test build with one clip decides it.
 - Fix:
-  - Turn on transcoding with codec VP8 for the Linux (Standalone) target on every referenced clip. Mind that Windows shares the "Standalone" settings, so a per-platform override must target Linux only, or Windows moves to VP8 too, which also works.
+  - Turn on transcoding on every referenced clip, with codec VP8, or Auto (picks per target platform). `intro.mp4` already transcodes, but to H.264, which does not help Linux. Transcode settings are per clip; Windows and Linux share the "Standalone" settings, so Windows moves to VP8 too, which also works.
   - Or re-export the clips as `.webm` VP8.
   - Size and import time grow somewhat [inf].
 
