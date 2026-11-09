@@ -1,0 +1,5 @@
+# Scratch + throwaway worktrees. Durable records live outside this folder.
+temp/
+__pycache__/
+# Per-machine test wall times, read by MCP/scripts/TestDurations.psm1.
+MCP/test-durations.json
