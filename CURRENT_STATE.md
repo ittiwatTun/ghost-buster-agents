@@ -21,7 +21,7 @@ What belongs here and nowhere else: working-tree state, uncommitted lists, local
 - **Smoke test passed end to end, all through the CLI.** Empty URP project at `E:\Itt\Repository\SwitchSmoke` (outside the repo):
   - `unity projects create SwitchSmoke --path E:\Itt\Repository --editor-version 6000.3.28f1 --template 3d --no-cloud`
   - `unity build <proj> --create-profile Switch`, then `unity build <proj> --profile Switch --output-path <proj>\Build\SwitchSmoke`. That build took 502 s through `run-timed.ps1` under the key `smoke:switch-player-build`; IL2CPP has 1,308 Bee steps and compiles with NintendoClang. Licensing handshake errors in the batch log are benign.
-  - Deploy: `NintendoSDK\Tools\CommandLineTools\RunOnTarget.exe <...>.nspd_root --target XAL03100237598 --no-wait` gave `Result: Success`. `ControlTarget.exe list-target` shows the EDEV over USB.
+  - Deploy: `NintendoSDK\Tools\CommandLineTools\RunOnTarget.exe <...>.nspd_root --target XAL03100237598 --no-wait` gave `Result: Success`, and the owner saw the scene on the EDEV screen. `ControlTarget.exe list-target` shows the EDEV over USB.
   - Gotchas: `run-timed.ps1 -Command` cannot start with a quoted exe (`cmd /c` strips the quote), so use an unquoted path. A launch that fails instantly records 0 s, so the next budget for that key drops to 120 s; the dead key is `smoke:switch-build`.
 - Merged `develop` (`b887538f0`, 43 commits, 237 files, 118 `.cs`/asmdef, no texture metas, no editor/package change) into `feature/nintendo-sdk` as `671d6d89a`, no conflicts. Local `develop` fast-forwarded to `b887538f0`. `ProjectSettings/EditorBuildSettings.asset` was restored to HEAD first: it differed only in line endings and blocked the merge.
 
