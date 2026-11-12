@@ -10,6 +10,42 @@ Paths below use this machine's layout:
 - `$CLT` = `$NX\NintendoSDK\Tools\CommandLineTools`
 - Unity Hub installs editors to `E:\UnityHub\<version>`
 
+## Version lock for `feature/nintendo-sdk`
+
+These versions belong together. A build on this branch must use all of them; a different editor, SDK or EDEV firmware is a different setup and needs this table updated first.
+
+| Piece | Locked version | Where it is set or read |
+| :-- | :-- | :-- |
+| Unity Editor | **6000.3.28f1** (revision `8f082d2fe476`), LTS | `ProjectSettings/ProjectVersion.txt` on this branch |
+| NNPM environment | **`6000.3.28 LTS-NXAddon22.2.0-Unity6.3`**, platform NX, toolset Unity | NNPM; installed at `E:\Nintendo\Unity6000.3.28_LTS-NXAddon22.2.0-Unity6.3` |
+| Unity Switch module | `UnitySetup-Nintendo-Switch-Support-for-Editor-6000.3.28f1-SDK-22.2.0-20261030-8f082d2fe476.exe`; the player reports "built against SDK 22.2.0" | `$NX\UnityForNintendoSwitch\`, installed into `E:\UnityHub\6000.3.28f1` |
+| NintendoSDK / NX Add-On | **22.2.13** (`release/sdk/v22.2.13-loc`, `0ccc474`) | `$NX\NintendoSDK\Revisions\NintendoSDK_Revision.txt`; `NINTENDO_SDK_ROOT` = `$NX\NintendoSDK` |
+| NintendoClang | `release/sdk/v22.1` (`d35bf77`) | `$NX\NintendoSDK\Revisions\NintendoClang_Revision.txt` |
+| Target Manager 2 | `release/sdk/v24.0` (`8caa80a`) | `$NX\NintendoSDK\Revisions\NintendoSDK_TargetManager2_Revision.txt` |
+| Switch input package | `com.unity.inputsystem.switch` **1.0.2** | `Packages/com.unity.inputsystem.switch/package.json` |
+| Input System / URP | 1.20.1 / 17.3.0 | `Packages/packages-lock.json` |
+| Development hardware | **EDEV**, platform `NX` (Switch 1), serial **`XAL03100237598`**, USB (Windows shows `NintendoSDK DevKit`, `VID_057E`) | `ControlTarget.exe list-target`, `get-target-platform` |
+| EDEV firmware | **NintendoSDK Firmware for NX 23.0.1-1.1** (SystemUpdater `release/sdk/v23`, `15d0f901`), the variation NNPM suggested | `ControlTarget.exe firmware-version --target XAL03100237598` |
+
+Check a machine against the table:
+
+```powershell
+$NX  = 'E:\Nintendo\Unity6000.3.28_LTS-NXAddon22.2.0-Unity6.3'
+$CLT = "$NX\NintendoSDK\Tools\CommandLineTools"
+Get-Content ProjectSettings\ProjectVersion.txt                                   # 6000.3.28f1 (8f082d2fe476)
+Test-Path 'E:\UnityHub\6000.3.28f1\Editor\Data\PlaybackEngines\Switch'           # True
+[Environment]::GetEnvironmentVariable('NINTENDO_SDK_ROOT','User')               # $NX\NintendoSDK
+Get-Content "$NX\NintendoSDK\Revisions\NintendoSDK_Revision.txt" -TotalCount 1  # release/sdk/v22.2.13-loc
+& "$CLT\ControlTarget.exe" list-target                                           # XAL03100237598  <NoIpAddress>
+& "$CLT\ControlTarget.exe" firmware-version --target XAL03100237598              # NintendoSDK Firmware for NX 23.0.1-1.1
+```
+
+Changing any one of them:
+
+- **Editor or NNPM environment:** they move together. Pick the new pair in NNPM, install it into a **new** environment folder (NNPM warns against editing an existing one), install the matching editor and module, point `NINTENDO_SDK_ROOT` at the new `NintendoSDK`, then update `ProjectVersion.txt` on a branch and tell the team.
+- **EDEV firmware:** re-initialize the EDEV with the firmware the new environment suggests (step 7), then update the firmware row.
+- **Another EDEV:** a second unit uses the same firmware; add its serial here and pass it with `--target`.
+
 ## 0. Before you start
 
 | Need | Notes |

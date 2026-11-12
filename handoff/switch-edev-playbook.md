@@ -1,6 +1,8 @@
 # Playbook: build GhostBuster for Nintendo Switch 1 and run it on the EDEV
 
-Written 2026-11-12 from the first end-to-end run on this machine. Branch `feature/nintendo-sdk`. A new machine starts with `switch-setup-playbook.md` (portal login to the first smoke build); sections 2 and 3 below are its short form. Every command below was run for real; the timings are this machine's (12 logical cores, 64 GB RAM).
+Written 2026-11-12 from the first end-to-end run on this machine. Branch `feature/nintendo-sdk`. A new machine starts with `switch-setup-playbook.md` (portal login to the first smoke build); sections 2 and 3 below are its short form.
+
+**Version lock:** this branch builds only with Unity **6000.3.28f1** + NNPM environment **`6000.3.28 LTS-NXAddon22.2.0-Unity6.3`** (NintendoSDK 22.2.13), deployed to the EDEV **`XAL03100237598`** on firmware **NX 23.0.1-1.1**. The full table and a check script are in `switch-setup-playbook.md` § Version lock. Every command below was run for real; the timings are this machine's (12 logical cores, 64 GB RAM).
 
 Nintendo's own documents are installed locally and are the source of truth; read them in place, never copy their text into a tracked file (they are CONFIDENTIAL):
 
