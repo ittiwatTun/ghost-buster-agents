@@ -10,7 +10,21 @@ What belongs here and nowhere else: working-tree state, uncommitted lists, local
 
 ## 2026-11-12 (session 3)
 
-### EDEV connected and initializing; develop merged into the Switch branch
+### GhostBuster runs on the Switch EDEV; GPU 5 to 6x over budget at PC Medium; PC Low test stopped mid-build
+
+**Session end, read this first.**
+
+- Branch `feature/nintendo-sdk`, pushed by the owner up to `d7a8876c9` (PR #106 against `develop`). **Not pushed yet:** `b50037b09` (Switch input package), `919f181b5` (TMP Overlay shaders always included), `dca3a8947` (strict variant matching opt-in), `737e94c23` (Switch settings written by builds). Tell the owner to push.
+- PR #106 shows no code in "Files changed": 3,927 files, the 3,874 texture metas push the code past GitHub's display limit. Offered: review per commit, or split the upgrade (`d8132020f` + `d59631523`) into its own PR (needs a rewritten branch the owner pushes). No decision yet.
+- **On the EDEV now works:** boot, intro (49 fps), title, lobby, PvP lobby, Tutorial, scene loads 3.7 to 8.6 s, Joy-Con control (after the input package), touch in menus, no exceptions. Memory 1.41 GB used / 1.44 GB free in the lobby.
+- **Frame rate at PC Medium, handheld:** lobby 4.9 to 5.8 fps (GPU 173 to 206 ms), Tutorial 11.6 to 12.2 fps (GPU 78 to 85 ms), CPU render 9 to 18 ms. GPU-bound by 5 to 6x.
+- **PC Low test: stopped at 14:43, not finished.** The test edits were reverted, so the tree is at the committed Medium setup. To rerun it: in `ProjectSettings/QualitySettings.asset` set the Switch level's `customRenderPipeline` guid to `e88533ab89c7a6f4fa37374ebde34902` (`PC_Low_RPAsset`), and in `SettingsData.cs` change both `? MediumQualityIndex` (Graphics and Light index getters) to `? 0`. Low needs new variants: `LitXRay` 1,536 per pass (`ForwardLit` done and cached, `XRayTranslucentWall` reached 528), URP `Lit` not reached. Those variants are cached, so the rerun resumes. Expect about 1 hour at Normal priority, then measure and compare. Do not commit the test edits.
+- **Uncommitted, build churn, leave alone or decide:** `Mobile/PC/PC_Low/PC_Medium_RPAsset` prefilter fields, `UniversalRenderPipelineGlobalSettings` runtime-settings list, two TMP font atlases, `UI_Shared.spriteatlas`, `Packages/Coplay/.gitignore`.
+- **Open items:** Switch button glyphs (prompts show keyboard and Xbox/PS); hide the graphics/light quality rows on Switch; controller-only play check; the final Switch look is a team decision (Medium was the owner's interim pick, art lead not asked yet); NVN Graphics Debugger for a per-pass GPU breakdown; the `LitXRay` translucent pass keyword set.
+- Playbooks (this folder, committed): `handoff/switch-setup-playbook.md` (portal login to the first smoke build, plus the **version lock**: Unity 6000.3.28f1, NNPM `6000.3.28 LTS-NXAddon22.2.0-Unity6.3`, NintendoSDK 22.2.13, EDEV `XAL03100237598` on firmware NX 23.0.1-1.1) and `handoff/switch-edev-playbook.md` (build, deploy, log reading, troubleshooting).
+- Tooling here: `temp/watch-switch-build.ps1` (log/PID watcher), `temp/build-priority-schedule.ps1` (detached Normal/Idle scheduler). Always start Unity builds detached and at Idle, and run `ControlTarget.exe terminate` before rebuilding (see `POSTIT.md`).
+
+### Earlier in this session: EDEV connected and initialized; develop merged into the Switch branch
 
 - Owner renamed the branch to **`feature/nintendo-sdk`** (still local, no upstream).
 - EDEV connected over USB: Device Manager shows `NintendoSdkDebugger` OK, serial `XAL03100237598`; no `dpinst.exe` needed. Initialization started from NNPM > Initialize the EDEV with the default firmware `23.0.1-1.1 (rev:15d0f90163)`, which matches the bundled `SystemUpdater` (release/sdk/v23, hash `15d0f901`). NintendoSDK itself is `v22.2.13`. Result not yet reported.
