@@ -2,6 +2,7 @@
 
 One line each, newest on top. Surprises worth a glance, not a record.
 
+- 2026-11-12 — A Switch player build runs 12 `UnityShaderCompiler` processes at Normal priority and holds the CPU at 100%; the owner's machine lagged badly. Start long Unity builds at Idle priority (set it on the batch `Unity.exe`; children inherit it) or only when the owner is away.
 - 2026-11-12 — A build started through Monitor or `run_in_background` is a child of the Claude Code process and dies with the session (a GhostBuster Switch build was lost mid-shader-compile this way). For a long Unity build, start `unity build` detached (`Start-Process -PassThru`) and have Monitor watch only the log and the PID.
 - 2026-11-09 — Nintendo Dev Interface (NDI) is deprecated and no longer downloadable; the Switch 1 SDK and tools now come through the Nintendo Package Manager (NNPM) on the developer portal (per Epic's UE 5.7 Switch notes). Older guides that say "install NDI" are stale.
 - 2026-11-09 — `mv` of a folder failed with `Device or resource busy` while the Bash tool's working directory sat inside it; it worked once the cwd moved out. Unity's `UnityPlayer.dll` carries its own Media Foundation error strings, so `grep -a` on the player binary answers "which decoder does the build use" without a test machine.
