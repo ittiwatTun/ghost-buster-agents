@@ -16,6 +16,13 @@ What belongs here and nowhere else: working-tree state, uncommitted lists, local
 - EDEV connected over USB: Device Manager shows `NintendoSdkDebugger` OK, serial `XAL03100237598`; no `dpinst.exe` needed. Initialization started from NNPM > Initialize the EDEV with the default firmware `23.0.1-1.1 (rev:15d0f90163)`, which matches the bundled `SystemUpdater` (release/sdk/v23, hash `15d0f901`). NintendoSDK itself is `v22.2.13`. Result not yet reported.
 - Local SDK docs, steps confirmed: `NintendoSDK\Documents\Package\contents\Pages\Page_126561209.html` (Initializing the EDEV). The relay box is a real Nintendo accessory after all ("Do not use the relay box during initialization"); not needed.
 - Switch module is still not installed in `E:\UnityHub\6000.3.28f1` (PlaybackEngines: Linux, Metro, Windows).
+- EDEV initialization: **Success** (owner).
+- Switch module installed into `E:\UnityHub\6000.3.28f1` (`PlaybackEngines\Switch`).
+- **Smoke test passed end to end, all through the CLI.** Empty URP project at `E:\Itt\Repository\SwitchSmoke` (outside the repo):
+  - `unity projects create SwitchSmoke --path E:\Itt\Repository --editor-version 6000.3.28f1 --template 3d --no-cloud`
+  - `unity build <proj> --create-profile Switch`, then `unity build <proj> --profile Switch --output-path <proj>\Build\SwitchSmoke`. That build took 502 s through `run-timed.ps1` under the key `smoke:switch-player-build`; IL2CPP has 1,308 Bee steps and compiles with NintendoClang. Licensing handshake errors in the batch log are benign.
+  - Deploy: `NintendoSDK\Tools\CommandLineTools\RunOnTarget.exe <...>.nspd_root --target XAL03100237598 --no-wait` gave `Result: Success`. `ControlTarget.exe list-target` shows the EDEV over USB.
+  - Gotchas: `run-timed.ps1 -Command` cannot start with a quoted exe (`cmd /c` strips the quote), so use an unquoted path. A launch that fails instantly records 0 s, so the next budget for that key drops to 120 s; the dead key is `smoke:switch-build`.
 - Merged `develop` (`b887538f0`, 43 commits, 237 files, 118 `.cs`/asmdef, no texture metas, no editor/package change) into `feature/nintendo-sdk` as `671d6d89a`, no conflicts. Local `develop` fast-forwarded to `b887538f0`. `ProjectSettings/EditorBuildSettings.asset` was restored to HEAD first: it differed only in line endings and blocked the merge.
 
 ## 2026-11-09 (session 2)
