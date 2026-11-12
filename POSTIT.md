@@ -2,6 +2,7 @@
 
 One line each, newest on top. Surprises worth a glance, not a record.
 
+- 2026-11-12 — An NSPD launched with RunOnTarget streams its files from the PC, so while the game runs on the EDEV the `Build/Switch/*.nspd` files stay locked and the next Unity build fails with "Could not write ... being used by another process". Run `ControlTarget.exe terminate` before rebuilding. Strict shader variant matching blanks the 3D image on Switch: URP UberPost/Bloom report fragment-only keywords on the vertex stage and get refused.
 - 2026-11-12 — A Switch player build runs 12 `UnityShaderCompiler` processes at Normal priority and holds the CPU at 100%; the owner's machine lagged badly. Start long Unity builds at Idle priority (set it on the batch `Unity.exe`; children inherit it) or only when the owner is away.
 - 2026-11-12 — A build started through Monitor or `run_in_background` is a child of the Claude Code process and dies with the session (a GhostBuster Switch build was lost mid-shader-compile this way). For a long Unity build, start `unity build` detached (`Start-Process -PassThru`) and have Monitor watch only the log and the PID.
 - 2026-11-09 — Nintendo Dev Interface (NDI) is deprecated and no longer downloadable; the Switch 1 SDK and tools now come through the Nintendo Package Manager (NNPM) on the developer portal (per Epic's UE 5.7 Switch notes). Older guides that say "install NDI" are stale.
