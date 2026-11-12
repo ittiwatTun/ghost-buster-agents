@@ -1,6 +1,6 @@
 # Playbook: build GhostBuster for Nintendo Switch 1 and run it on the EDEV
 
-Written 2026-11-12 from the first end-to-end run on this machine. Branch `feature/nintendo-sdk`. Every command below was run for real; the timings are this machine's (12 logical cores, 64 GB RAM).
+Written 2026-11-12 from the first end-to-end run on this machine. Branch `feature/nintendo-sdk`. A new machine starts with `switch-setup-playbook.md` (portal login to the first smoke build); sections 2 and 3 below are its short form. Every command below was run for real; the timings are this machine's (12 logical cores, 64 GB RAM).
 
 Nintendo's own documents are installed locally and are the source of truth; read them in place, never copy their text into a tracked file (they are CONFIDENTIAL):
 
