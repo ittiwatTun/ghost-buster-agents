@@ -8,6 +8,16 @@ What belongs here and nowhere else: working-tree state, uncommitted lists, local
 
 ---
 
+## 2026-11-12 (session 3)
+
+### EDEV connected and initializing; develop merged into the Switch branch
+
+- Owner renamed the branch to **`feature/nintendo-sdk`** (still local, no upstream).
+- EDEV connected over USB: Device Manager shows `NintendoSdkDebugger` OK, serial `XAL03100237598`; no `dpinst.exe` needed. Initialization started from NNPM > Initialize the EDEV with the default firmware `23.0.1-1.1 (rev:15d0f90163)`, which matches the bundled `SystemUpdater` (release/sdk/v23, hash `15d0f901`). NintendoSDK itself is `v22.2.13`. Result not yet reported.
+- Local SDK docs, steps confirmed: `NintendoSDK\Documents\Package\contents\Pages\Page_126561209.html` (Initializing the EDEV). The relay box is a real Nintendo accessory after all ("Do not use the relay box during initialization"); not needed.
+- Switch module is still not installed in `E:\UnityHub\6000.3.28f1` (PlaybackEngines: Linux, Metro, Windows).
+- Merged `develop` (`b887538f0`, 43 commits, 237 files, 118 `.cs`/asmdef, no texture metas, no editor/package change) into `feature/nintendo-sdk` as `671d6d89a`, no conflicts. Local `develop` fast-forwarded to `b887538f0`. `ProjectSettings/EditorBuildSettings.asset` was restored to HEAD first: it differed only in line endings and blocked the merge.
+
 ## 2026-11-09 (session 2)
 
 ### Switch 1 EDEV onboarding; Unity 6000.3.28f1 upgrade; NNPM environment installed
