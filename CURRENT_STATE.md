@@ -30,7 +30,7 @@ What belongs here and nowhere else: working-tree state, uncommitted lists, local
 - **EDEV crash:** after using Title Exit (`Application.Quit()`) the console crashed and the next launches failed (`CommandShell Error 0x00080C10`) until `ControlTarget reset`. Cause not proven; owner suspects the in-game exit. Title Exit is now shown disabled on Switch and skipped by navigation (`cc38b8173`, `d9a3d9fe4`, merge `1c85a839d`).
 - **Installed ROM** now has save data and the disabled Exit (`Build/SwitchRom`, `[SUCCESS]`). The earlier ROM had no save code, which is why progress made in it was lost.
 - **Version:** Switch showed 1.0.0 (hand-typed NMETA DisplayVersion). `4757832b9` makes `SwitchBuild` sync the NMETA `DisplayVersion` with Player Settings > Version (0.4.7); it also used a nonexistent `PlayerSettings.Switch.displayVersion` and broke the Editor compile, fixed in `47e9db706` (merge `2997dc924`). ROM reinstalled with it, app info cache cleared.
-- Not pushed: 20 commits on `feature/nintendo-sdk` after `origin/feature/nintendo-sdk`, up to `2997dc924`.
+- Not pushed: 18 commits on `feature/nintendo-sdk` after `origin/feature/nintendo-sdk`, up to `2997dc924`.
 - **Backlog:** "Switch settings fixed to one value, not configurable" (owner note, not an order; owner hands it to the team). The NSP item shipped and moved to `_archive/BACKLOG.md`.
 - **Next:** NVN Graphics Debugger capture of Game1; PC Low vs Medium decision with the art lead; 30 fps lock on Switch; docked check; Switch button glyphs.
 - Not done: tracked `.ai/CURRENT_STATE.md` / `NEXT_TASK.md` not updated for the Switch work (the branch has not used them so far); only `docs/process/CHANGELOG.md` got entries.
