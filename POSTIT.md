@@ -2,6 +2,7 @@
 
 One line each, newest on top. Surprises worth a glance, not a record.
 
+- 2026-11-13 — On Switch, PlayerPrefs is memory-only and gone when the game closes (Unity for Switch FAQ); a save bridge through `UnityEngine.Switch.PlayerPrefsHelper.rawData` and nn.fs fixes it. A Monitor using `tail -F` on an EDEV log never ends when the game closes: stop it with TaskStop when the test is over.
 - 2026-11-13 — The Switch build rendered 1080p in handheld: `SettingsData.Boot()` applied the PC screen-size option (default 1920x1080) on every platform. Fixed to 720p, GPU time halved. An NSP ROM builds in 1.5 min (1.7 GB, smaller than the 5 GB NSPD) and installs with `RunOnTarget <DevMenuCommand.nsp> -- application install <nsp> --force`.
 - 2026-11-12 — An NSPD launched with RunOnTarget streams its files from the PC, so while the game runs on the EDEV the `Build/Switch/*.nspd` files stay locked and the next Unity build fails with "Could not write ... being used by another process". Run `ControlTarget.exe terminate` before rebuilding. Strict shader variant matching blanks the 3D image on Switch: URP UberPost/Bloom report fragment-only keywords on the vertex stage and get refused.
 - 2026-11-12 — A Switch player build runs 12 `UnityShaderCompiler` processes at Normal priority and holds the CPU at 100%; the owner's machine lagged badly. Start long Unity builds at Idle priority (set it on the batch `Unity.exe`; children inherit it) or only when the owner is away.
