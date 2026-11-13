@@ -16,7 +16,7 @@ What belongs here and nowhere else: working-tree state, uncommitted lists, local
 
 - Report: `research/2026-11-13-switch-performance-report.md` (all figures, findings, next steps). The owner will hand the findings to the team.
 - Branch `feature/nintendo-sdk` at `1990ec87d`, local only. **Not pushed (8 commits):** `b50037b09`, `919f181b5`, `dca3a8947`, `737e94c23`, `d0a1cc4f1` + merge `e51dd0a0c` (720p), `caa5f2db0` + merge `1990ec87d` (ROM build, title, icon). Tell the owner to push. Branches `fix/switch-720p` and `feature/switch-nsp-build` are merged; their worktrees are removed.
-- **Uncommitted PC Low test edits, still in the main tree:** `ProjectSettings/QualitySettings.asset` Switch level on `PC_Low_RPAsset` (guid `e88533ab...`), `SettingsData.cs` both `? MediumQualityIndex` changed to `? 0`. Owner has not decided PC Low vs Medium; do not commit them as they are. `ProjectSettings/ProjectSettings.asset` shows `M` after the ROM build: line endings only.
+- **PC Low is now committed** as the Switch setting (`c3c25c771`, owner said commit all); build churn committed in `a2adb9a70` and `ef0916ed2`. Main tree clean. Art lead sign-off on the Low look still open.
 - Uncommitted build churn as before: the four RP assets, URP global settings, two TMP font atlases, `UI_Shared.spriteatlas`, `Packages/Coplay/.gitignore`.
 - **Measurements, handheld, EDEV:**
   - PC Low at 1536x864: Lobby 10.2 fps / GPU 97 ms, Tutorial about 20 fps / 36 to 45 ms, StageSelect 9.3 to 10.2 fps / 98 to 108 ms, Game1 5.9 to 7.9 fps / 121 to 174 ms.
@@ -31,7 +31,7 @@ What belongs here and nowhere else: working-tree state, uncommitted lists, local
 - **Installed ROM** now has save data and the disabled Exit (`Build/SwitchRom`, `[SUCCESS]`). The earlier ROM had no save code, which is why progress made in it was lost.
 - **Version:** Switch showed 1.0.0 (hand-typed NMETA DisplayVersion). `4757832b9` makes `SwitchBuild` sync the NMETA `DisplayVersion` with Player Settings > Version (0.4.7); it also used a nonexistent `PlayerSettings.Switch.displayVersion` and broke the Editor compile, fixed in `47e9db706` (merge `2997dc924`). ROM reinstalled with it, app info cache cleared.
 - **Exit hidden again:** the Exit button has no disabled look, so `940e69bdc` (merge `a415f0d81`) hides it on Switch. ROM build for it started 09:06 (pid 19868) with an install queued in a session background job; if the session ended first, install by hand: `RunOnTarget --target XAL03100237598 <DevMenuCommand.nsp> -- application install BuildSwitchRomGhostBuster.nsp --force`.
-- Not pushed: 20 commits on `feature/nintendo-sdk` after `origin/feature/nintendo-sdk`, up to `a415f0d81`.
+- Not pushed: 23 commits on `feature/nintendo-sdk` after `origin/feature/nintendo-sdk`, up to `ef0916ed2`.
 - **Backlog:** "Switch settings fixed to one value, not configurable" (owner note, not an order; owner hands it to the team). The NSP item shipped and moved to `_archive/BACKLOG.md`.
 - **Next:** NVN Graphics Debugger capture of Game1; PC Low vs Medium decision with the art lead; 30 fps lock on Switch; docked check; Switch button glyphs.
 - Not done: tracked `.ai/CURRENT_STATE.md` / `NEXT_TASK.md` not updated for the Switch work (the branch has not used them so far); only `docs/process/CHANGELOG.md` got entries.

@@ -40,8 +40,8 @@ In the commands below, `$NX` is the environment root `E:\Nintendo\Unity6000.3.28
 | `DISABLESTEAMWORKS` in the Nintendo Switch define group | `ProjectSettings/ProjectSettings.asset` | the Steam scripts compile out |
 | NuGet DLLs Editor-only | `Assets/Plugins/NuGet/*.dll.meta` | they would otherwise ship to the IL2CPP player |
 | `CrashReporting` no-op on Switch | `Scripts/Core/CrashReporting.cs` | `CrashReportHandler` does not exist on Switch |
-| "Switch" quality level using `PC_Medium_RPAsset` | `ProjectSettings/QualitySettings.asset` | Switch matches the PC shipping default and URP strips shaders against that asset only |
-| Graphics and light quality locked to Medium on Switch | `Scripts/UI/Settings/SettingsData.cs` | no stripped tier can be picked at runtime |
+| "Switch" quality level using `PC_Low_RPAsset` (`c3c25c771`) | `ProjectSettings/QualitySettings.asset` | halves GPU time against Medium; URP strips shaders against that asset only |
+| Graphics and light quality locked to Low on Switch (`SwitchQualityIndex`) | `Scripts/UI/Settings/SettingsData.cs` | no stripped tier can be picked at runtime |
 | Switch input package | `Packages/com.unity.inputsystem.switch` (copied from `$NX\UnityForNintendoSwitch\Packages\com.unity.inputsystem.switch@1.0.2`, folder renamed without `@1.0.2`) | without it Joy-Cons are only a generic gamepad and the player cannot move |
 | TMP Overlay shaders always included | `ProjectSettings/GraphicsSettings.asset` | `WorldUIOnTop` swaps labels to the Overlay shader at runtime, so their outline/underlay variants were never built (PC has the same gap, silently) |
 | Build entry | `Assets/_Project/Editor/Build/SwitchBuild.cs` | development NSPD build to `Build/Switch/GhostBuster.nspd`; `BuildDevelopmentRom` builds the installable `Build/SwitchRom/GhostBuster.nsp` |
