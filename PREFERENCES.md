@@ -32,6 +32,7 @@ All paths in this file are relative to this folder unless they start with `Ghost
 - **Never push a branch and never merge a PR on GitHub. The owner does both.** Report the branches and SHAs ready to push. The local merge into the main tree that `CLAUDE.md` Working Rule 1 asks for is not a push and stays allowed.
 - **Pull the base before cutting a branch**: `git fetch origin`, fast-forward local `develop`, then branch.
 - **Commit only your own hunks.** The owner may run several sessions on one working tree. Never `checkout`, `stash` or `reset` a file another session may hold; commit with `git commit -- <paths>`.
+- **Keep history linear.** Land worktree work on the base branch with a rebase and a fast-forward (`git -C <main tree> merge --ff-only <branch>`), never `merge --no-ff`: the owner finds the merge bubbles ugly (2026-11-13, a day of `--no-ff` merges was rebuilt into one line). This overrides the `--no-ff` in `CLAUDE.md` Working Rule 1; the worktree part stays. Delete the merged worktree branch afterwards.
 
 ### Verifying
 

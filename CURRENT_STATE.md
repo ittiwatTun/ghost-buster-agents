@@ -14,6 +14,7 @@ What belongs here and nowhere else: working-tree state, uncommitted lists, local
 
 **Session end, read this first.**
 
+- **History rebuilt linear (owner ask):** the day's `--no-ff` merges were replaced by 11 commits in one line on top of `737e94c23`, `23083dbaf` .. `1eda60562`, same tree as before (`a6f05dd1`). Exit trio and version pair squashed. Old history kept at `refs/backup/nintendo-sdk-before-linear` (`ef0916ed2`). The owner had already pushed `ef0916ed2`, so **origin needs a force push** (`git push --force-with-lease origin feature/nintendo-sdk`); the owner does it. The SHAs named below this line are the old ones. PR #106 body updated to the new SHAs. Local fix branches deleted. New rule in `PREFERENCES.md`: keep history linear, no `--no-ff`.
 - Report: `research/2026-11-13-switch-performance-report.md` (all figures, findings, next steps). The owner will hand the findings to the team.
 - Branch `feature/nintendo-sdk` at `1990ec87d`, local only. **Not pushed (8 commits):** `b50037b09`, `919f181b5`, `dca3a8947`, `737e94c23`, `d0a1cc4f1` + merge `e51dd0a0c` (720p), `caa5f2db0` + merge `1990ec87d` (ROM build, title, icon). Tell the owner to push. Branches `fix/switch-720p` and `feature/switch-nsp-build` are merged; their worktrees are removed.
 - **PC Low is now committed** as the Switch setting (`c3c25c771`, owner said commit all); build churn committed in `a2adb9a70` and `ef0916ed2`. Main tree clean. Art lead sign-off on the Low look still open.
