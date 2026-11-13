@@ -103,7 +103,8 @@ $DMC = "$NX\NintendoSDK\TargetTools\NX-NXFP2-a64\DevMenuCommand\Release\DevMenuC
 
 - Success prints `[SUCCESS]`. The game then starts from the HOME Menu or the DevMenu Application list.
 - The same command is `$NX\UnityForNintendoSwitch\Tools\InstallApplication.bat` (drag the `.nsp` onto it), which uses the default target.
-- After an icon or title change, run `InvalidateApplicationCache.bat` in the same folder, or the HOME Menu keeps the old one.
+- Title, publisher and icon come from `Switch/GhostBuster.nmeta` (`switchNMETAOverride`), not from the Player Settings language fields; without it Unity uses `UnityDefault.nmeta` ("DefaultName").
+- After an icon or title change, run `InvalidateApplicationCache.bat` in the same folder, or the HOME Menu keeps the old one. Same from the CLI: `RunOnTarget --target <serial> $DMC -- application invalidate-cache application-control`.
 - A game started from the HOME Menu sends no log to the PC; use the NSPD for measuring.
 
 ## 7. Reading the EDEV log
