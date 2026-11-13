@@ -44,7 +44,9 @@ In the commands below, `$NX` is the environment root `E:\Nintendo\Unity6000.3.28
 | Graphics and light quality locked to Medium on Switch | `Scripts/UI/Settings/SettingsData.cs` | no stripped tier can be picked at runtime |
 | Switch input package | `Packages/com.unity.inputsystem.switch` (copied from `$NX\UnityForNintendoSwitch\Packages\com.unity.inputsystem.switch@1.0.2`, folder renamed without `@1.0.2`) | without it Joy-Cons are only a generic gamepad and the player cannot move |
 | TMP Overlay shaders always included | `ProjectSettings/GraphicsSettings.asset` | `WorldUIOnTop` swaps labels to the Overlay shader at runtime, so their outline/underlay variants were never built (PC has the same gap, silently) |
-| Build entry | `Assets/_Project/Editor/Build/SwitchBuild.cs` | development NSPD build to `Build/Switch/GhostBuster.nspd` |
+| Build entry | `Assets/_Project/Editor/Build/SwitchBuild.cs` | development NSPD build to `Build/Switch/GhostBuster.nspd`; `BuildDevelopmentRom` builds the installable `Build/SwitchRom/GhostBuster.nsp` |
+| 720p render | `Scripts/UI/Settings/SettingsData.cs` `ApplyScreen` | Switch sets 1280x720; the PC screen-size option (1920x1080) made handheld render 2.25 times the pixels |
+| Title, publisher, icon | `ProjectSettings/ProjectSettings.asset` (all 16 language slots), `Assets/_Project/Image/Logo/SwitchIcon.png` | shown on the HOME Menu for an installed NSP; the icon is a placeholder |
 
 ## 5. Build
 
@@ -88,6 +90,22 @@ In the commands below, `$NX` is the environment root `E:\Nintendo\Unity6000.3.28
 - To keep the log in a file while working: start RunOnTarget with `Start-Process ... -RedirectStandardOutput <file> -PassThru` and read the file.
 - GUI alternative: Nintendo Target Manager 2 > right-click the EDEV > Connect to Target, then drag the `.nspd` folder onto its row.
 
+### Install the ROM so it runs without the PC
+
+```powershell
+# build the NSP: detached and at Idle as in section 5, with --execute-method SwitchBuild.BuildDevelopmentRom
+# (about 1.5 min with cached shaders, 1.7 GB, output Build\SwitchRom\GhostBuster.nsp)
+
+# install into EDEV system memory (about 1 min over USB); --force replaces the installed copy
+$DMC = "$NX\NintendoSDK\TargetTools\NX-NXFP2-a64\DevMenuCommand\Release\DevMenuCommand.nsp"
+& "$CLT\RunOnTarget.exe" --target XAL03100237598 $DMC -- application install "E:\Itt\Repository\GhostBuster\Build\SwitchRom\GhostBuster.nsp" --force
+```
+
+- Success prints `[SUCCESS]`. The game then starts from the HOME Menu or the DevMenu Application list.
+- The same command is `$NX\UnityForNintendoSwitch\Tools\InstallApplication.bat` (drag the `.nsp` onto it), which uses the default target.
+- After an icon or title change, run `InvalidateApplicationCache.bat` in the same folder, or the HOME Menu keeps the old one.
+- A game started from the HOME Menu sends no log to the PC; use the NSPD for measuring.
+
 ## 7. Reading the EDEV log
 
 - Boot is healthy when you see `Initialize engine version: 6000.3.28f1`, `Initialised in ... seconds` and `Starting main loop at ... seconds`.
@@ -119,3 +137,10 @@ In the commands below, `$NX` is the environment root `E:\Nintendo\Unity6000.3.28
 - ⚠ Button prompts show keyboard and Xbox/PS glyphs; Switch glyphs are still to do.
 - ⚠ The graphics and light quality rows still show in the Switch settings menu, though both are locked to Medium.
 - ⚠ Touch drives the menus; the game must also be fully playable on controllers.
+
+**Update 2026-11-13** (full figures: `research/2026-11-13-switch-performance-report.md`):
+
+- ✅ Rendering fixed to 720p (`d0a1cc4f1`); with the PC Low test settings the game renders 1024x576. GPU time halved again; the GPU is fill-bound.
+- ✅ Tutorial 42 to 44 fps. ❌ Lobby 22 fps, StageSelect 17 to 19 fps, Game1 13 to 15 fps (GPU 66 to 75 ms, needs 2.2 times less).
+- ✅ Installable ROM with title, publisher and placeholder icon, installed on the EDEV.
+- Next: NVN Graphics Debugger capture of Game1; decide PC Low vs Medium; Switch settings fixed to one value (owner note, with the team).
