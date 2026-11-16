@@ -52,6 +52,7 @@ All paths in this file are relative to this folder unless they start with `Ghost
 | `MCP/` | This machine's private MCP setup for GhostBuster: `README.md` (servers, setup, verify, long runs) and `scripts/` (the `gb-` wait wrappers, the long-run watchers). |
 | `scripts/` · `setup/` | `open-unity.ps1`, `open-vs.ps1`, `StandardUser.ps1`, `setup-machine.ps1`, and the tracked sources it installs (`handoff/session-start-setup.md`). |
 | `Memory/` | The only memory location. Never write memory to `~/.claude/`, `%APPDATA%` or any other machine path. |
+| `Sprint/` | Weekly sprint posts, one file each: `S<NN>_<YYYY-MM-DD>_<MM-DD>.md`, numbered from this folder, built by `king-of-ashes/.agents.local/Sprint/SPRINT_UPDATE.md`. Asked for as *"sprint each project to 2 post"*, then *"keep it in ghost-buster sprint folder"* (2026-11-16). |
 | `research/` | Investigations, one file or folder each, dated. |
 | `handoff/` | Session handoffs and setup guides. |
 | `_archive/` | What left a live ledger (rolled-off `CURRENT_STATE` days, closed backlog items). |
